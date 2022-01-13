@@ -2,11 +2,9 @@ package de.neuefische.backend;
 
 import de.neuefische.backend.models.ShoppingItem;
 import de.neuefische.backend.repositories.ShoppingItemRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.Arrays;
 
@@ -15,12 +13,16 @@ import java.util.Arrays;
 
 public class BackendApplication implements CommandLineRunner {
 
+    public BackendApplication(ShoppingItemRepo shoppingItemRepo) {
+        this.shoppingItemRepo = shoppingItemRepo;
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
     }
 
-    @Autowired
-    ShoppingItemRepo shoppingItemRepo;
+
+    private final ShoppingItemRepo shoppingItemRepo;
 
     @Override
     public void run(String... args) throws Exception{
