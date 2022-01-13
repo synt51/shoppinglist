@@ -12,11 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Builder
 @Document("shopItems")
-public class Item {
+public class ShoppingItem {
 
     @Id
-    String id;
+    String itemId;
 
-    String name;
-    int count;
+    private String itemName;
+    private int itemCount;
 }
