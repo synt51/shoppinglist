@@ -10,7 +10,7 @@
     <groupId>de.neuefische</groupId>
     <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>backend</name>
+    <name>backend-module</name>
     <description>backend for shoppinglist</description>
     <properties>
         <java.version>17</java.version>
