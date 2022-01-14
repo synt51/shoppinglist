@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document("shopItems")
+@Document("shopLists")
 public class ShoppingList {
 
     @Id

@@ -11,29 +11,29 @@ import java.util.Arrays;
 
 @SpringBootApplication
 
-public class BackendApplication implements CommandLineRunner {
+public class BackendApplication { //vorher implements CommandLineRunner
 
-    public BackendApplication(ShoppingItemRepo shoppingItemRepo) {
-        this.shoppingItemRepo = shoppingItemRepo;
-    }
+//    public BackendApplication(ShoppingItemRepo shoppingItemRepo) {
+//        this.shoppingItemRepo = shoppingItemRepo;
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
     }
 
 
-    private final ShoppingItemRepo shoppingItemRepo;
-
-    @Override
-    public void run(String... args) throws Exception{
-        final ShoppingItem rtx = ShoppingItem.builder().itemName("RTX 3080").itemCount(1).build();
-        ShoppingItem amd = ShoppingItem.builder().itemName("RX6800").itemCount(1).build(); //shoppingItemRepo.insert(rtx);
-
-        shoppingItemRepo.findAll();
-        shoppingItemRepo.saveAll(Arrays.asList(rtx, amd));
-
-        System.out.println(shoppingItemRepo.findAll());
-
-
-    }
+//    private final ShoppingItemRepo shoppingItemRepo;
+//
+//    @Override
+//    public void run(String... args) throws Exception{
+//        final ShoppingItem rtx = ShoppingItem.builder().itemName("RTX 3080").itemCount(1).build();
+//        ShoppingItem amd = ShoppingItem.builder().itemName("RX6800").itemCount(1).build(); //shoppingItemRepo.insert(rtx);
+//
+//        shoppingItemRepo.findAll();
+//        shoppingItemRepo.saveAll(Arrays.asList(rtx, amd));
+//
+//        System.out.println(shoppingItemRepo.findAll());
+//
+//
+//    }
 }
