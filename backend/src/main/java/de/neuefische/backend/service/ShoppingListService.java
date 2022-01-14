@@ -19,6 +19,6 @@ public class ShoppingListService {
 
     public String addNewList(ShoppingList newList){
         shoppingListRepo.save(newList);
-        return newList + " has been added as a new list.";
+        return newList + " has been added as a new list.Test";
     }
 }
