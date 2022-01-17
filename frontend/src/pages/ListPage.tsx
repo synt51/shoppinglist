@@ -4,11 +4,13 @@ import './Lists.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {IItem} from "../models/ShoppingItems";
+import {IListController} from "../controller/listController";
 
 
 
-export default function ListPage() {
 
+export default function ListPage(props: {listController: IListController}) {
+    const {listController} = props
     //const [lists, setLists] = useState<ILists>(controller.getLists())
 
     const addList = (event: FormEvent<HTMLFormElement> | IItem) => {

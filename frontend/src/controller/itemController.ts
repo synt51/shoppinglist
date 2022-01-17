@@ -1,7 +1,8 @@
-import {IItems} from "../models/ShoppingItems";
+import {IItems, IItem, IItemSetter} from "../models/ShoppingItems";
+import {IListController} from "./listController";
 
-export interface IHomeController {
-    getItems: () => IItems,
+export interface IItemController {
+    getItems: (setter: IItemSetter, listName: string) => IItems,
     addItem: (newItem: string, quantity: number) => IItems,
     removeItem: (item: string) => IItems,
     decreaseItem: (item: string) => IItems,
@@ -9,7 +10,7 @@ export interface IHomeController {
     //removeList: () => IItems
 }
 
-export default function homeController(): IHomeController {
+export default function itemController(listController: IListController): IItemController {
     const STORAGE_KEY: string = 'ts_shopping_cart'
     const re: RegExp = new RegExp(/\s/g)
     let items: IItems = JSON.parse(localStorage.getItem(STORAGE_KEY)!) || {}
@@ -24,10 +25,12 @@ export default function homeController(): IHomeController {
     }
 
     return {
-        getItems: (): IItems => ({...items}),
+        getItems: (setter, listName) => (listController.getListItems(setter, listName)),
+
         addItem: (newItem, quantity): IItems => {
             if (isValidName(newItem)) {
                 const temp: IItems = {...items}
+                // @ts-ignore
                 temp[newItem] = ((temp[newItem] ? temp[newItem] : 0) + parseInt(String(quantity)))
                 setItems(temp)
             }
@@ -36,7 +39,7 @@ export default function homeController(): IHomeController {
 
         removeItem: (item: string): IItems => {
             const temp: IItems = {...items}
-            temp[item] >= 0 || temp[item] <= 0 ? delete temp[item] : temp[item]--
+            temp[item] >= 0 || temp[item] < 0 ? delete temp[item] : temp[item]--
             setItems(temp)
             return {...items}
         },

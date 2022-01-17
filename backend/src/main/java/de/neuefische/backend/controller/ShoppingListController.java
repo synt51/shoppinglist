@@ -5,10 +5,11 @@ import de.neuefische.backend.service.ShoppingListService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
-@RequestMapping("lists")
+@RequestMapping("/lists")
+@CrossOrigin
 public class ShoppingListController {
 
     private final ShoppingListService shoppingListService;
@@ -17,8 +18,28 @@ public class ShoppingListController {
         this.shoppingListService = shoppingListService;
     }
 
-    @GetMapping("all")
-    public Collection<ShoppingList> getAllLists(){
+    @GetMapping("/")
+    public List<ShoppingList> getAllLists(){
         return shoppingListService.getAllLists();
+    }
+
+    @GetMapping("/{listId")
+    public ShoppingList getList(@PathVariable String listId){
+        return shoppingListService.getList(listId);
+    }
+
+    @PostMapping("/")
+    public ShoppingList addNewList(@RequestBody ShoppingList newList){
+        return shoppingListService.addNewList(newList);
+    }
+
+    @PutMapping("/")
+    public ShoppingList changeListName(@RequestBody ShoppingList newList){
+        return shoppingListService.changeListName(newList);
+    }
+
+    @DeleteMapping("/{listId}")
+    public String deleteList (@PathVariable String listId){
+        return shoppingListService.deleteList(listId);
     }
 }

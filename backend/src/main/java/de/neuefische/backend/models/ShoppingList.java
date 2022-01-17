@@ -23,9 +23,4 @@ public class ShoppingList {
    // @Indexed(unique = true)  //for unique list name
     private String listName;
     private List<ShoppingItem> itemsInList;
-
-    public ShoppingList(String listName, List<ShoppingItem> itemsInList) {
-        this.listName = listName;
-        this.itemsInList = itemsInList;
-    }
 }

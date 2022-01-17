@@ -5,7 +5,7 @@ import de.neuefische.backend.repositories.ShoppingListRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ShoppingListService {
@@ -13,12 +13,23 @@ public class ShoppingListService {
     @Autowired
     ShoppingListRepo shoppingListRepo;
 
-    public Collection<ShoppingList> getAllLists(){
-        return shoppingListRepo.findAll();
+    public List<ShoppingList> getAllLists(){return shoppingListRepo.findAll();}
+
+    public ShoppingList getList(String listId){return shoppingListRepo.findById(listId).orElse(null);}
+
+    public ShoppingList addNewList(ShoppingList newList){
+        return shoppingListRepo.save(newList);
     }
 
-    public String addNewList(ShoppingList newList){
-        shoppingListRepo.save(newList);
-        return newList + " has been added as a new list.Test";
+    public ShoppingList changeListName (ShoppingList newList){
+        ShoppingList oldList = shoppingListRepo.findById(newList.getListId()).orElse(null);
+        oldList.setListName(newList.getListName());
+        shoppingListRepo.save(oldList);
+        return oldList;
+    }
+
+    public String deleteList(String listId){
+        shoppingListRepo.deleteById(listId);
+        return listId;
     }
 }
