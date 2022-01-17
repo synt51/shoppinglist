@@ -3,7 +3,7 @@ import React, {ChangeEvent, FormEvent, useState} from "react";
 import '../App.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {IHomeController} from "../controller/homeController";
+import {IItemController} from "../controller/itemController";
 import {IItem, IItems} from "../models/ShoppingItems";
 import {TextField} from "@mui/material";
 
@@ -14,7 +14,7 @@ interface IInput {
     quantityInput: {value: string}
 }
 
-export default function Home(props: { controller: IHomeController }) {
+export default function Home(props: { controller: IItemController }) {
     const {controller} = props
     const [items, setItems] = useState<IItems>(controller.getItems())
     const [quantityStatus, setQuantityStatus] = useState<number>(1)
@@ -60,7 +60,7 @@ export default function Home(props: { controller: IHomeController }) {
 
     return (
         <div className={"App-header"}>
-            <h1>Shopping List</h1>
+            <h1>Shopping Lisgiuggiut</h1>
             <div className={"AddItemBox"}>
                 <form onSubmit={addItem}>
                     <TextField className={"AddItemQuantity"} label={"QTY"}  type={"number"} inputProps={{ style: { textAlign: 'center' }}}

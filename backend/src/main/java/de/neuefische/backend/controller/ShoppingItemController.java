@@ -4,10 +4,11 @@ import de.neuefische.backend.models.ShoppingItem;
 import de.neuefische.backend.service.ShoppingItemService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
-@RequestMapping("items")
+@RequestMapping("/items")
+@CrossOrigin
 public class ShoppingItemController {
 
     private final ShoppingItemService shoppingItemService;
@@ -16,13 +17,28 @@ public class ShoppingItemController {
         this.shoppingItemService = shoppingItemService;
     }
 
-    @GetMapping("all")
-    public Collection<ShoppingItem> getAllItems(){
+    @GetMapping("/")
+    public List<ShoppingItem> getAllItems(){
         return shoppingItemService.getAllItems();
     }
 
-    @PutMapping("all")
-    public String addNewItem(@RequestBody ShoppingItem newItem){
+    @GetMapping("/{itemId}")
+    public ShoppingItem getItem(@PathVariable String itemId){
+        return shoppingItemService.getItem(itemId);
+    }
+
+    @PostMapping("/")
+    public ShoppingItem addNewItem(@RequestBody ShoppingItem newItem){
         return shoppingItemService.addNewItem(newItem);
+    }
+
+    @PutMapping("/")
+    public ShoppingItem changeItemName(@RequestBody ShoppingItem newItem){
+        return shoppingItemService.changeItemName(newItem);
+    }
+
+    @DeleteMapping("/{itemId}")
+    public String deleteItem (@PathVariable String itemId){
+        return shoppingItemService.deleteItem(itemId);
     }
 }

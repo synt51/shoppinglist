@@ -1,10 +1,10 @@
-import {IHomeController} from "../controller/homeController";
+import {IItemController} from "../controller/itemController";
 import {useNavigate, useParams} from "react-router-dom";
 import React from "react";
 import {faExchangeAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export default function Change(props: {controller: IHomeController}) {
+export default function Change(props: {controller: IItemController}) {
     const {controller} = props
     const params = useParams()
     const navigate = useNavigate()
