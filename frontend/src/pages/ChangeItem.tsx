@@ -4,7 +4,7 @@ import React from "react";
 import {faExchangeAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export default function Change(props: {controller: IItemController}) {
+export default function ChangeItem(props: {controller: IItemController}) {
     const {controller} = props
     const params = useParams()
     const navigate = useNavigate()

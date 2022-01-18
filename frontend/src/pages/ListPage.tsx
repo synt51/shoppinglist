@@ -1,59 +1,47 @@
-import {FormEvent, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import '../App.scss';
 import './Lists.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {IItem} from "../models/ShoppingItems";
 import {IListController} from "../controller/listController";
+import {TextField} from "@mui/material";
+import Items from "../components/Items";
+import {IItemController} from "../controller/itemController";
 
 
 
 
-export default function ListPage(props: {listController: IListController}) {
-    const {listController} = props
-    //const [lists, setLists] = useState<ILists>(controller.getLists())
+export default function ListPage(props: {listController: IItemController}) {
 
-    const addList = (event: FormEvent<HTMLFormElement> | IItem) => {
-
-    }
 
     return (
         <div className={"App-header"}>
-            <h1>Lists:</h1>
-            <div className={"AddListBox"}>
-                <form onSubmit={addList}>
-                    <input className={"AddListText"} type={"textarea"} placeholder={"New list name..."} maxLength={25}
-                           id={"textInput"}/>
-                    <button type={"submit"}/>
+            <h1>List:</h1>
+            <div className={"AddItemBox"}>
+                <form onSubmit={addItem}>
+                    <TextField className={"AddItemQuantity"} label={"QTY"}  type={"number"} inputProps={{ style: { textAlign: 'center' }}}
+                               size= 'small' margin= 'none' onChange={handleQuantity} value={quantityStatus} id={"outlined-number"} InputLabelProps={{
+                        shrink: true,
+                    }}/>
+                    <input className={"AddItemText"} type={"textarea"} placeholder={"Add an item..."} maxLength={15} id={"textInput"}/>
+                    <button  type={"submit"}/>
                     <FontAwesomeIcon icon={faPlus}/>
                 </form>
             </div>
-            <section className={"lists"}>
-                <article className={"lists-card"}>
-                    <header className={"card-header"}>
-                        <h2>XY's List</h2>
-                        <p>Items inside: 9</p>
-                    </header>
-                </article>
-                <article className={"lists-card"}>
-                    <header className={"card-header"}>
-                        <h2>XY's List</h2>
-                        <p>Items inside: 9</p>
-                    </header>
-                </article>
-                <article className={"lists-card"}>
-                    <header className={"card-header"}>
-                        <h2>XY's List</h2>
-                        <p>Items inside: 9</p>
-                    </header>
-                </article>
-                <article className={"lists-card"}>
-                    <header className={"card-header"}>
-                        <h2>XY's List</h2>
-                        <p>Items inside: 9</p>
-                    </header>
-                </article>
-            </section>
+            <div className={"DeleteList"}>
+                <p> Delete everything?</p>
+                <button className={"trash"}>
+                    <FontAwesomeIcon icon={faTrash} onClick={() => {
+                        removeAll()
+                    }}/>
+                </button>
+            </div>
+            <div className={"Outer"}>
+                <div className={"Inner"}>
+                    <Items items={items} add={addItem} remove={removeItem} decrease={decreaseItem} />
+                </div>
+            </div>
         </div>
     )
 }
