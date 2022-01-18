@@ -1,17 +1,21 @@
 package de.neuefische.backend;
 
 import de.neuefische.backend.models.ShoppingItem;
+import de.neuefische.backend.models.UserMongo;
 import de.neuefische.backend.repositories.ShoppingItemRepo;
+import de.neuefische.backend.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
 
 @SpringBootApplication
 
-public class BackendApplication { //vorher implements CommandLineRunner
+public class BackendApplication implements CommandLineRunner{ //vorher implements CommandLineRunner
 
 //    public BackendApplication(ShoppingItemRepo shoppingItemRepo) {
 //        this.shoppingItemRepo = shoppingItemRepo;
@@ -22,6 +26,24 @@ public class BackendApplication { //vorher implements CommandLineRunner
     }
 
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
+
+    @Override
+    public void run(String... args) throws Exception{
+        String encodedPassword = encoder.encode("admin123456");
+        UserMongo heinz = UserMongo.builder().username("heinzadmin").password(encodedPassword).build();
+
+        UserMongo heinz3 = UserMongo.builder().username("heinzadmin2").password("admin12345").build();
+        userRepository.save(heinz);
+
+        userRepository.save(heinz3);
+
+        System.out.println(userRepository.findAll());
+    }
 //    private final ShoppingItemRepo shoppingItemRepo;
 //
 //    @Override
