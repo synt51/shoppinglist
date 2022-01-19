@@ -4,13 +4,19 @@ import de.neuefische.backend.models.ShoppingItem;
 import de.neuefische.backend.models.UserMongo;
 import de.neuefische.backend.repositories.ShoppingItemRepo;
 import de.neuefische.backend.repositories.UserRepository;
+import de.neuefische.backend.service.MongoUserDetailsService;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 @SpringBootApplication
@@ -20,6 +26,7 @@ public class BackendApplication implements CommandLineRunner{ //vorher implement
 //    public BackendApplication(ShoppingItemRepo shoppingItemRepo) {
 //        this.shoppingItemRepo = shoppingItemRepo;
 //    }
+    private static final Log LOG = LogFactory.getLog(BackendApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
@@ -34,13 +41,18 @@ public class BackendApplication implements CommandLineRunner{ //vorher implement
 
     @Override
     public void run(String... args) throws Exception{
-        String encodedPassword = encoder.encode("admin123456");
-        UserMongo heinz = UserMongo.builder().username("heinzadmin").password(encodedPassword).build();
+        final String encodedPassword = encoder.encode("admin123456");
+        final UserMongo user = UserMongo.newUser("HeinzAdmin", encodedPassword,
+                List.of(new SimpleGrantedAuthority(MongoUserDetailsService.AUTHORITY_API_READWRITE)));
 
-        UserMongo heinz3 = UserMongo.builder().username("heinzadmin2").password("admin12345").build();
-        userRepository.save(heinz);
+        try {
+            userRepository.insert(user);
+        } catch (DuplicateKeyException e){
+            LOG.info("User '" + user.getUsername() + "' already exists.");
+        }
+        //UserMongo heinz = UserMongo.builder().username("heinzadmin").password(encodedPassword).build();
 
-        userRepository.save(heinz3);
+        //userRepository.save(heinz);
 
         System.out.println(userRepository.findAll());
     }
