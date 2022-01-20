@@ -5,11 +5,12 @@ import de.neuefische.backend.models.ShoppingItem;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
+
 
 @Repository
 public interface ShoppingItemRepo extends MongoRepository<ShoppingItem, String> {
 
-    List<ShoppingItem> findAllByItemName(String itemName);
+    Optional<ShoppingItem> findAllByItemName(String itemName);
 
 }

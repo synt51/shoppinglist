@@ -1,5 +1,6 @@
 package de.neuefische.backend.controller;
 
+import de.neuefische.backend.models.ShoppingItem;
 import de.neuefische.backend.models.UserMongo;
 import de.neuefische.backend.service.MongoUserDetailsService;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +21,7 @@ public class UserController {
         this.mongoUserDetailsService = mongoUserDetailsService;
     }
 
-    @GetMapping("/user/me")
+    @GetMapping
     public String getUser(Principal principal){
         String username = principal.getName();
         Collection<? extends GrantedAuthority> authorities =
@@ -34,5 +35,10 @@ public class UserController {
         } else {
             return "Nope, access denied!";
         }
+    }
+
+    @PostMapping
+    public ShoppingItem postNewItem(){
+        return null;
     }
 }

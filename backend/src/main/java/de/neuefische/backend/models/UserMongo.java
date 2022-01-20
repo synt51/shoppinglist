@@ -38,4 +38,6 @@ public class UserMongo implements UserDetails {
     boolean accountNonLocked;
     boolean credentialsNonExpired;
 
+    List<ShoppingItem> myShoppingItems;
+
 }

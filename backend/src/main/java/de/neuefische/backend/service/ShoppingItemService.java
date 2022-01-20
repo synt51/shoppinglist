@@ -2,20 +2,25 @@ package de.neuefische.backend.service;
 
 import de.neuefische.backend.models.ShoppingItem;
 import de.neuefische.backend.repositories.ShoppingItemRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingItemService {
 
-    @Autowired
-    ShoppingItemRepo shoppingItemRepo;
+
+    private final ShoppingItemRepo shoppingItemRepo;
+
+    public ShoppingItemService(ShoppingItemRepo shoppingItemRepo) {
+        this.shoppingItemRepo = shoppingItemRepo;
+    }
+
 
     public List<ShoppingItem> getAllItems(){return shoppingItemRepo.findAll();}
 
-    public ShoppingItem getItem(String itemId){return shoppingItemRepo.findById(itemId).orElse(null);}
+    public Optional<ShoppingItem> getItemById(String itemId){return shoppingItemRepo.findById(itemId);}
 
     public ShoppingItem addNewItem(ShoppingItem newItem){
         return shoppingItemRepo.save(newItem);

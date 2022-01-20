@@ -5,6 +5,7 @@ import de.neuefische.backend.service.ShoppingItemService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/items")
@@ -23,8 +24,8 @@ public class ShoppingItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ShoppingItem getItem(@PathVariable String itemId){
-        return shoppingItemService.getItem(itemId);
+    public Optional<ShoppingItem> getItem(@PathVariable String itemId){
+        return shoppingItemService.getItemById(itemId);
     }
 
     @PostMapping("/")
