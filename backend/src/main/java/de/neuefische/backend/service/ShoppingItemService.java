@@ -23,7 +23,7 @@ public class ShoppingItemService {
     public Optional<ShoppingItem> getItemById(String itemId){return shoppingItemRepo.findById(itemId);}
 
     public ShoppingItem addNewItem(ShoppingItem newItem){
-        return shoppingItemRepo.save(newItem);
+        return shoppingItemRepo.insert(newItem);
     }
 
     public ShoppingItem changeItemName(ShoppingItem newItem){

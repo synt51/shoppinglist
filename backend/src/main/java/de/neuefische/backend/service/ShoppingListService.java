@@ -15,7 +15,7 @@ public class ShoppingListService {
 
     public List<ShoppingList> getAllLists(){return shoppingListRepo.findAll();}
 
-    public ShoppingList getList(String listId){return shoppingListRepo.findById(listId).orElse(null);}
+    public ShoppingList getListById(String listId){return shoppingListRepo.findById(listId).orElse(null);}
 
     public ShoppingList addNewList(ShoppingList newList){
         return shoppingListRepo.save(newList);

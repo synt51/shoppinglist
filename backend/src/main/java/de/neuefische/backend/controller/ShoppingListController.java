@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lists")
+@RequestMapping("api/lists")
 @CrossOrigin
 public class ShoppingListController {
 
@@ -23,9 +23,9 @@ public class ShoppingListController {
         return shoppingListService.getAllLists();
     }
 
-    @GetMapping("/{listId}")
-    public ShoppingList getList(@PathVariable String listId){
-        return shoppingListService.getList(listId);
+    @GetMapping("/{id}")
+    public ShoppingList getListById(@PathVariable String listId){
+        return shoppingListService.getListById(listId);
     }
 
     @PostMapping("/")
@@ -38,7 +38,7 @@ public class ShoppingListController {
         return shoppingListService.changeListName(newList);
     }
 
-    @DeleteMapping("/{listId}")
+    @DeleteMapping("/{id}")
     public String deleteList (@PathVariable String listId){
         return shoppingListService.deleteList(listId);
     }
