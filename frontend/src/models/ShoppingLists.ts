@@ -1,4 +1,4 @@
-import {IItem} from "./ShoppingItems";
+import {IItem, IItems} from "./ShoppingItems";
 import {FormEvent} from "react";
 
 
@@ -10,7 +10,7 @@ export type removeListsFunc = (list: IList) => void
 export interface IList {
     id: string,
     listName: string,
-    items: IItem[];
+    items: IItems;
 }
 
 export type IListSetter = React.Dispatch<React.SetStateAction<IList[]>>

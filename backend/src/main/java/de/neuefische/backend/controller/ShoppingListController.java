@@ -2,7 +2,7 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.models.ShoppingList;
 import de.neuefische.backend.service.ShoppingListService;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class ShoppingListController {
         return shoppingListService.getAllLists();
     }
 
-    @GetMapping("/{listId")
+    @GetMapping("/{listId}")
     public ShoppingList getList(@PathVariable String listId){
         return shoppingListService.getList(listId);
     }

@@ -4,32 +4,34 @@ import axios from 'axios';
 import Home from './pages/Home'
 import NavBar from './components/NavBar';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Change from "./pages/ChangeItem";
+import ChangeItem from "./pages/ChangeItem";
 import itemController, {IItemController} from "./controller/itemController";
 import ListPage from "./pages/ListPage";
-import {IListController} from "./controller/listController";
-import {Switch} from "@mui/material";
+import listController, {IListController} from "./controller/listController";
+import ChangeList from "./pages/ChangeList";
 
 export default function App() {
     // const itemController: IItemController = itemController()
     // const listController: IListController= listController()
 
     //return (
-        // <div className="App">
-        //     <BrowserRouter>
-        //         <NavBar />
-        //         <Routes>
-        //             <Route path={"/"} element={<Home controller={itemController}/>}/>
-        //             <Route path={"/change/item/:name"} element={<Change controller={itemController}/>}/>
-        //             <Route path={"/lists"} element={<ListPage controller={listController}/>}/>
-        //         </Routes>
-        //     </BrowserRouter>
-        // </div>
+    // <div className="App">
+    //     <BrowserRouter>
+    //         <NavBar />
+    //         <Routes>
+    //             <Route path={"/"} element={<Home controller={itemController}/>}/>
+    //             <Route path={"/change/item/:name"} element={<Change controller={itemController}/>}/>
+    //             <Route path={"/lists"} element={<ListPage controller={listController}/>}/>
+    //         </Routes>
+    //     </BrowserRouter>
+    // </div>
     //);
 
     const [lists, setLists] = useState([])
+    const itemController: IItemController = itemController()
+    const listController: IListController = listController()
 
-    useEffect (() => {
+    useEffect(() => {
         getAllLists()
             .then(lists => setLists(lists))
             .catch(error => console.error(error))
@@ -37,49 +39,54 @@ export default function App() {
 
     const createNewList = listName =>
         postList(listName)
-            .then(()=>getAllLists())
+            .then(() => getAllLists())
             .then(lists => setLists(lists))
             .catch(error => console.error(error))
 
     const removeList = listId =>
         deleteList(listId)
-            .then(()=> getAllLists())
+            .then(() => getAllLists())
             .then(lists => setLists(lists))
-            .catch(error=> console.error(error))
+            .catch(error => console.error(error))
 
     const editListName = list =>
         putListName(list)
-            .then(()=> getAllLists())
+            .then(() => getAllLists())
             .then(lists => setLists(lists))
-            .catch(error=> console.error(error))
+            .catch(error => console.error(error))
 
 
+    return (
 
-    return(
-      <BrowserRouter>
-          <NavBar/>
-          <Route path={"/"}>
-              <Home
-                  createNewList={createNewList}
-                  lists={lists}
-                  removeList={removeList}
-                  editListName={editListName}
-                  />
-          </Route>
-          <Route path={"/list/:listName"}>
-              <ListPage
-                  items={items}
-                  changeItemName{changeItemName}
-                  decreaseCount={decreaseCount}
-                  increaseCount={increaseCount}
-                  removeItem={removeItem}
-              />
-          </Route>
-          <Route path={"/edit/list/:listName"}>
-              <EditList
-                  changeListName={changeListName}
-                  />
-          </Route>
-      </BrowserRouter>
+        //before change
+
+        //   Home
+        //        createNewList={createNewList}
+        //        lists={lists}
+        //        removeList={removeList}
+        //       editListName={editListName}
+
+        // ListPage
+        // items={items}
+        // changeItemName{changeItemName}
+        // decreaseCount={decreaseCount}
+        // increaseCount={increaseCount}
+        // removeItem={removeItem}
+
+        // EditList
+        // changeListName={changeListName}
+
+
+        <div className="App">
+            <BrowserRouter>
+                <NavBar/>
+                <Routes>
+                    <Route path={"/"} element={<Home controller={listController}/>}/>
+                    <Route path={"/list/:listName"} element={<ListPage controller={itemController}/>}/>
+                    <Route path={"/edit/list/:listName"} element={<ChangeList controller={listController}/>}/>
+                    <Route path={"/edit/item/:itemName"} element={<ChangeItem controller={itemController}/>}/>
+                </Routes>
+            </BrowserRouter>
+        </div>
     );
 }
