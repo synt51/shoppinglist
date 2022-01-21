@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {addItemsFunc, decreaseItemsFunc, IItem, removeItemsFunc} from "../models/ShoppingItems";
+import {addItemsFunc, changeItemFunc, IItem, removeItemsFunc} from "../models/ShoppingItems";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight, faExchangeAlt, faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -7,13 +7,13 @@ interface ItemCardProps {
     item: IItem
     add: addItemsFunc
     remove: removeItemsFunc
-    decrease: decreaseItemsFunc
+    change: changeItemFunc
 }
 
 export default function ItemCard(props: ItemCardProps) {
-    const {item, add, remove, decrease} = props
-    const name = `${item[0]}`
-    const count = `${item[1]}`
+    const {item, add, remove, change} = props
+    const name = `${item.itemName}`
+    const count = `${item.itemCount}`
     return (
         <div className={"Item"}>
             <h2>{name}</h2>
@@ -21,7 +21,7 @@ export default function ItemCard(props: ItemCardProps) {
                 <div className='quantity'>
                 <button className={"arrow"} value={"Remove"}>
                     <FontAwesomeIcon icon={faChevronLeft} onClick={() => {
-                        decrease(item)
+                        remove(item.id!, false)
                     }}/>
                 </button>
                 <span> {count} </span>
@@ -31,15 +31,17 @@ export default function ItemCard(props: ItemCardProps) {
                     }}/>
                 </button>
                 </div>
-                <Link to={`/change/${item[0]}`}>
+                <Link to={`/change/${item.itemName}`}>
                     <button className={"change"}>
-                        <FontAwesomeIcon icon={faExchangeAlt}/>
-                        {/*<p>Change</p>*/}
+                        <FontAwesomeIcon icon={faExchangeAlt} onClick={() => {
+                            change(item.id!)
+                        }}/>
+
                     </button>
                 </Link>
                 <button className={"trash"}>
                     <FontAwesomeIcon icon={faTrash} onClick={() => {
-                        remove(item)
+                        remove(item.id!, true)
                     }}/>
                 </button>
             </div>

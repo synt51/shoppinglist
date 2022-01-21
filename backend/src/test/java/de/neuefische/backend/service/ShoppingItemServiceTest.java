@@ -19,10 +19,6 @@ class ShoppingItemServiceTest {
     private final ShoppingItemService shoppingItemService = new ShoppingItemService(shoppingItemRepo);
 
     @Test
-    void getAllItems() {
-    }
-
-    @Test
     void getItemById() {
         //GIVEN
         ShoppingItem expected = ShoppingItem.builder().itemId("test-id").itemName("test-name").itemCount(1).build();
@@ -32,6 +28,37 @@ class ShoppingItemServiceTest {
         Optional<ShoppingItem> actual = shoppingItemService.getItemById("test-id");
         //THEN
         assertThat(actual, Matchers.is(Optional.of(expected)));
+    }
+
+    @Test
+    void getItemByNonExistingId() {
+        //GIVEN
+        ShoppingItem expected = ShoppingItem.builder().itemId("test-id").itemName("test-name").itemCount(1).build();
+
+        when(shoppingItemRepo.findById("test-id")).thenReturn(Optional.of(expected));
+        when(shoppingItemRepo.findById("wrong-id")).thenReturn(Optional.empty());
+        //WHEN
+        Optional<ShoppingItem> actual = shoppingItemService.getItemById("wrong-id");
+        //THEN
+        assertThat(actual, Matchers.is(Optional.empty()));
+    }
+
+    @Test
+    void getItemByNullId() {
+        //GIVEN
+        ShoppingItem expected = ShoppingItem.builder().itemId("test-id").itemName("test-name").itemCount(1).build();
+
+        when(shoppingItemRepo.findById("test-id")).thenReturn(Optional.of(expected));
+        when(shoppingItemRepo.findById(null)).thenThrow(new IllegalArgumentException());
+        //WHEN
+        try {
+            shoppingItemService.getItemById(null);
+            fail();
+        } catch (IllegalArgumentException e){
+
+        }
+        //THEN
+
     }
 
     @Test

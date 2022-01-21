@@ -23,4 +23,6 @@ public class ShoppingList {
    // @Indexed(unique = true)  //for unique list name
     private String listName;
     private List<ShoppingItem> itemsInList;
+
+
 }

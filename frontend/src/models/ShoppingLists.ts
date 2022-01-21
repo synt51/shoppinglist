@@ -1,22 +1,18 @@
-import {IItem, IItems} from "./ShoppingItems";
-import {FormEvent} from "react";
+import React from "react";
+import {IItem} from "./ShoppingItems";
 
-
-export type ILists = [n: string]
-export type addListsFunc = (event: FormEvent<HTMLFormElement> | IList) => void
-export type removeListsFunc = (list: IList) => void
-
+export type removeListFunc = (listName: string) => void
 
 export interface IList {
     id: string,
     listName: string,
-    items: IItems;
+    items: IItem[]
 }
 
 export type IListSetter = React.Dispatch<React.SetStateAction<IList[]>>
 
-export interface ListsProps {
-    lists: ILists,
-    add: addListsFunc,
-    remove: removeListsFunc
+export interface IListController {
+    getLists: () => Promise<IList[]> | void
+    addList: (listName: string) => Promise<IList[]> | void
+    removeList: (listName: string) => Promise<IList[]> | void
 }

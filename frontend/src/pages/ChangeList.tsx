@@ -1,8 +1,8 @@
-import {IListController} from "../controller/listController";
 import {useNavigate, useParams} from "react-router-dom";
 import React from "react";
 import {faExchangeAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {IListController} from "../models/ShoppingLists";
 
 export default function ChangeList(props: {controller: IListController}) {
     const {controller} = props
